@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import { getAllPosts } from "./components/AllPosts";
+import "./services/App.css"
 
-function App() {
+export const App = () => {
+  // return <div>Hello World!</div>
+  const [posts, setAllPosts] = useState([])
+
+  useEffect(() => {
+    getAllPosts().then(employeeArray => {
+        setAllPosts(employeeArray)
+    })
+}, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="posts-container">
+      <h1>All Posts</h1>
+      {posts.map(post => (
+        <div className="post" key={post.id}>
+          <h2 className="post-info">{post.postTitle}</h2>
+          <p>{post.postBody}</p>
+        </div>
+      ))}
     </div>
   );
 }
 
-export default App;
